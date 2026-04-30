@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./responsiveness.css">
+    <link rel="icon" href="./cowry.webp">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body style="background-color: #f4f7fa;">
+
+    <div class="Log-in-logo">
+        <img src="./download (19).svg" alt="">
+    </div>
+
+
+    <div class="form-container">
+        <div class="log-in-left">
+            <h1>Jump right in</h1>
+            <h2>Sign in to continue</h2>
+            <div style="margin-top: 10px;">
+                <span>New user? <a href="./signup.html">Create account</a></span>
+            </div>
+        </div>
+
+
+
+        <div class="box">
+            <form action="">
+                <div class="form" style="display: flex; flex-direction: column; width: 80%; margin: 60px auto;">
+
+                    <div class="google-apple"
+                        style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px;">
+                        <a style="display: flex; align-items: center; border: 2px solid #e0e4eb; width: 48%; text-decoration: none; padding: 8px 28px; color: black; font-weight: 500; border-radius: 5px;"
+                            href="">
+                            <img src="./download (20).svg" alt="" style="margin-right: 8px;">
+                            <p style="margin: 0px; font-size: 14px;">Sign In with Google</p>
+                        </a>
+
+                        <a style="display: flex; align-items: center; border: 2px solid #e0e4eb; width: 48%; text-decoration: none; padding: 8px 29px; color: black; font-weight: 500; border-radius: 5px;"
+                            href="">
+                            <img src="./download (22).svg" alt="" style="width: 20px; margin-right: 8px;">
+                            <p style="margin: 0; font-size: 14px;">Sign In with Apple</p>
+                        </a>
+                    </div>
+                    <div class="divider">or</div> <br>
+                    <form action="">
+                        <div class="input-container">
+                            <input type="email" id="email" placeholder=" " required>
+                            <label for="email">Email Address</label>
+                        </div>
+
+                        <div class="input-container">
+                            <input type="password" id="pass" placeholder=" " required>
+                            <label for="pass">Password</label>
+                        </div>
+                        <i class="fa-solid fa-eye" id="togglePassword"></i>
+                        <a href="">Forget password?</a> <br>
+                        <button>Sign in</button>
+                    </form>
+                </div> <br>
+                <div class="help-section" style="display: flex; justify-content: space-between;">
+                    <span>Trouble signing in? <a
+                            style="text-decoration: none; color: #0368f5; font-size: 14px;font-weight: 600;"
+                            href="">Chat with us</a></span>
+                    <a style="color: #6c83a3; text-decoration: none; font-size: 14px;" href="">Privacy | Terms</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
