@@ -1,10 +1,10 @@
-@media screen and (max-width:606px){
-     body {
+@media screen and (max-width:606px){ 
+    body {
         display: flex;
         /* Ensure body takes full width and content stacks */
         width: 100%;
         min-width: 320px; /* Prevent content from becoming too small */
-        overflow-x: hidden; /* Prevent horizontal scrolling */
+        overflow-x: hidden !important; /* Prevent horizontal scrolling */
         flex-direction: column;
      }
      .form-container {
