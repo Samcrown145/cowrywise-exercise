@@ -300,6 +300,7 @@
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
+        overflow: hidden !important;
     }
 
     .flex-section-1, .flex-section-2 {
@@ -402,8 +403,13 @@
     }
 
     .scroll-card {
-        width: 85% !important;
+        width: 85vw !important;
         height: 35vh !important;
+        flex-shrink: 0 !important;
+    }
+
+    .name h1 {
+        font-size: 32px !important;
     }
 
     .scroll-card h3 {
