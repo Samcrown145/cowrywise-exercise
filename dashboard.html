@@ -12,14 +12,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <script>
-        // Route Protection - Redirect if not authenticated
+        // Route Protection - only redirect when there is no active session
         (function() {
             const userData = JSON.parse(localStorage.getItem('userData'));
-            const userPin = localStorage.getItem('userPin');
-            
-            // Check if user is properly authenticated
-            if (!userData || !userData.firstName || !userData.password || !userPin) {
-                // User is not authenticated - redirect to login
+            const hasActiveSession = userData && (userData.email || userData.displayName || userData.uid);
+
+            if (!hasActiveSession) {
                 setTimeout(() => {
                     window.location.href = 'login.html';
                 }, 500);
@@ -132,15 +130,15 @@
         function loadUserData() {
             const userData = JSON.parse(localStorage.getItem('userData'));
             
-            if (!userData || !userData.firstName) {
-                // Redirect to login if not authenticated
+            if (!userData || (!userData.email && !userData.displayName && !userData.uid)) {
                 window.location.href = 'login.html';
                 return;
             }
 
-            // Populate user information
-            const fullName = `${userData.firstName} ${userData.lastName}`;
-            const userName = userData.firstName;
+            const firstName = userData.firstName || userData.displayName?.split(' ')[0] || 'User';
+            const lastName = userData.lastName || '';
+            const fullName = [firstName, lastName].filter(Boolean).join(' ').trim() || 'User';
+            const userName = firstName;
             
             document.getElementById('userName').textContent = fullName;
             document.getElementById('userGreeting').textContent = `Welcome back, ${userName}! You're all set up and ready to start investing and saving with Cowrywise.`;
@@ -152,8 +150,7 @@
             document.getElementById('profileName').textContent = fullName;
             document.getElementById('profileEmail').textContent = userData.email || '-';
             
-            // Create avatar with initials
-            const initials = (userData.firstName.charAt(0) + userData.lastName.charAt(0)).toUpperCase();
+            const initials = (firstName.charAt(0) + (lastName.charAt(0) || '')).toUpperCase();
             document.getElementById('profileAvatar').textContent = initials;
         }
 

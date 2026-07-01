@@ -252,21 +252,27 @@ function validateForm() {
 
 function createAcc() {
     const userData = JSON.parse(localStorage.getItem('userData')) || {};
+    const firstName = firstNameInput.value.trim();
+    const lastName = lastNameInput.value.trim();
+    const fullName = [firstName, lastName].filter(Boolean).join(' ').trim();
     
     // Save profile data
     const profileData = {
         ...userData,
-        firstName: firstNameInput.value.trim(),
-        lastName: lastNameInput.value.trim(),
+        firstName,
+        lastName,
         username: usernameInput.value.trim(),
         phone: phoneInput.value.trim(),
         password: passwordInput.value.trim(),
+        pin: localStorage.getItem('userPin') || null,
         isHalal: document.getElementById('halalToggle').checked,
         createdAt: new Date().toISOString()
     };
     
     localStorage.setItem('userData', JSON.stringify(profileData));
     localStorage.setItem('userEmail', profileData.email || profileData.username);
+    localStorage.setItem('currentUserName', fullName || profileData.firstName || profileData.email || 'User');
+    localStorage.setItem('userDisplayName', fullName || profileData.firstName || profileData.email || 'User');
     
     // Save to persistent accounts list (for login purposes)
     const allUserAccounts = JSON.parse(localStorage.getItem('allUserAccounts')) || [];

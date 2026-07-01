@@ -123,7 +123,29 @@ document.getElementById('pinForm').addEventListener('submit', function(e) {
   } else {
 
   // Success Case - Save PIN
+  const currentUserData = JSON.parse(localStorage.getItem('userData')) || {};
+  const allUserAccounts = JSON.parse(localStorage.getItem('allUserAccounts')) || [];
+  const existingAccountIndex = allUserAccounts.findIndex(acc => acc.email === currentUserData.email);
+  const updatedUserData = {
+    ...currentUserData,
+    pin: firstPin
+  };
+
+  if (existingAccountIndex >= 0) {
+    allUserAccounts[existingAccountIndex] = {
+      ...allUserAccounts[existingAccountIndex],
+      ...updatedUserData
+    };
+  } else {
+    allUserAccounts.push(updatedUserData);
+  }
+
+  const fullName = [updatedUserData.firstName, updatedUserData.lastName].filter(Boolean).join(' ').trim();
+  localStorage.setItem('userData', JSON.stringify(updatedUserData));
   localStorage.setItem('userPin', firstPin);
+  localStorage.setItem('allUserAccounts', JSON.stringify(allUserAccounts));
+  localStorage.setItem('currentUserName', fullName || updatedUserData.email || 'User');
+  localStorage.setItem('userDisplayName', fullName || updatedUserData.email || 'User');
   
   Toastify({
     text: "PIN created successfully.",
@@ -142,7 +164,7 @@ document.getElementById('pinForm').addEventListener('submit', function(e) {
     }
   }).showToast();
   setTimeout(() => {
-     window.location.href = "dashboard.html"
+     window.location.href = "welcome.html"
   }, 500);
  
 }

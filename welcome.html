@@ -9,12 +9,11 @@
     <script>
         // Route Protection - Redirect if not authenticated
         (function() {
-            const userData = JSON.parse(localStorage.getItem('userData'));
+            const userData = JSON.parse(localStorage.getItem('userData') || 'null');
             const userPin = localStorage.getItem('userPin');
+            const hasSavedIdentity = localStorage.getItem('currentUserName') || userData?.firstName || userData?.displayName || userData?.email;
             
-            // Check if user is properly authenticated
-            if (!userData || !userData.firstName || !userData.password || !userPin) {
-                // User is not authenticated - redirect to login
+            if (!userData || !hasSavedIdentity || !userPin) {
                 setTimeout(() => {
                     window.location.href = 'login.html';
                 }, 500);
@@ -67,8 +66,9 @@
         const continueBtn = document.getElementById("continueBtn");
         const message = document.getElementById("message");
 
-        const savedName = localStorage.getItem("currentUserName");
-        const savedEmail = localStorage.getItem("userEmail");
+        const userData = JSON.parse(localStorage.getItem('userData') || 'null');
+        const savedName = localStorage.getItem("currentUserName") || userData?.firstName || userData?.displayName || localStorage.getItem("userDisplayName");
+        const savedEmail = localStorage.getItem("userEmail") || userData?.email;
 
         if (savedName) {
             nameSpan.textContent = savedName + "!";
@@ -107,6 +107,8 @@
             if (activeSelection) {
                 const selectedType = activeSelection.getAttribute("data-type");
                 console.log(`User confirmed option selection: ${selectedType}`);
+
+                localStorage.setItem('selectedGoalType', selectedType);
 
                 if (selectedType === "investments") {
                     window.location.href = "investment.html";

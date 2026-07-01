@@ -121,8 +121,11 @@
             currency: "NGN",
 
             onSuccess: function (response) {
+                localStorage.setItem('walletFunded', 'true');
+                localStorage.setItem('lastFundingReference', response.reference || '');
+                localStorage.setItem('lastFundingAmount', finalNumericAmount.toString());
                 alert("Payment successful! Transaction Reference: " + response.reference);
-                console.log(response);
+                window.location.href = "dashboard.html";
             },
 
             onClose: function () {

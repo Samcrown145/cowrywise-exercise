@@ -182,10 +182,18 @@
         
         if (matchingAccount) {
             // User found - set as current user and go to dashboard
-            localStorage.setItem('userData', JSON.stringify({
+            const savedPin = matchingAccount.pin || localStorage.getItem('userPin');
+            const currentUserData = {
                 ...matchingAccount,
                 lastLogin: new Date().toISOString()
-            }));
+            };
+
+            localStorage.setItem('userData', JSON.stringify(currentUserData));
+            localStorage.setItem('userEmail', email);
+
+            if (savedPin) {
+                localStorage.setItem('userPin', savedPin);
+            }
             
             Toastify({
                 text: "Login successful!",
