@@ -7,6 +7,21 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="EnterPin.css">
+
+  <script>
+    // Route Protection - Redirect if not authenticated
+    (function() {
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      
+      // Check if user has completed profile (has firstName from complete-profile.html)
+      if (!userData || !userData.firstName || !userData.password) {
+        // User hasn't completed profile - redirect to login
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 500);
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -107,7 +122,9 @@ document.getElementById('pinForm').addEventListener('submit', function(e) {
      
   } else {
 
-  // Success Case
+  // Success Case - Save PIN
+  localStorage.setItem('userPin', firstPin);
+  
   Toastify({
     text: "PIN created successfully.",
     duration: 4000,
@@ -125,8 +142,8 @@ document.getElementById('pinForm').addEventListener('submit', function(e) {
     }
   }).showToast();
   setTimeout(() => {
-     window.location.href = "verifybvn.html"
-  }, 300);
+     window.location.href = "dashboard.html"
+  }, 500);
  
 }
 

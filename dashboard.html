@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Cowrywise</title>
+    <link rel="icon" href="./cowry.webp">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./responsiveness.css">
+    <link rel="stylesheet" href="./dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        // Route Protection - Redirect if not authenticated
+        (function() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const userPin = localStorage.getItem('userPin');
+            
+            // Check if user is properly authenticated
+            if (!userData || !userData.firstName || !userData.password || !userPin) {
+                // User is not authenticated - redirect to login
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 500);
+            }
+        })();
+    </script>
+
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar-dashboard">
+        <div class="logo-section">
+            <img src="./download (19).svg" alt="Cowrywise Logo">
+            <span>Cowrywise</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" onclick="goToInvestment()">Invest</a>
+            <a href="#" onclick="goToSavings()">Save</a>
+            <a href="#" onclick="goToProfile()">Profile</a>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="dashboard-container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div id="loadingMessage" class="loading-message" style="display: none;">
+                Loading your profile...
+            </div>
+            
+            <div class="welcome-text">
+                <h1>Welcome back! 👋</h1>
+                <h2 id="userName">User</h2>
+                <p id="userGreeting">You're all set up and ready to start investing and saving with Cowrywise.</p>
+            </div>
+
+            <!-- User Info Grid -->
+            <div class="user-info-grid">
+                <div class="info-card">
+                    <h3>Email Address</h3>
+                    <p id="userEmail">-</p>
+                </div>
+                <div class="info-card">
+                    <h3>Username</h3>
+                    <p id="userUsername">-</p>
+                </div>
+                <div class="info-card">
+                    <h3>Phone Number</h3>
+                    <p id="userPhone">-</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="main-content">
+            <!-- Left Column - Actions -->
+            <div class="content-card">
+                <h3>What would you like to do?</h3>
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="goToInvestment()">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Start Investing</span>
+                    </button>
+                    <button class="action-btn" onclick="goToSavings()">
+                        <i class="fas fa-piggy-bank"></i>
+                        <span>Start Saving</span>
+                    </button>
+                    <button class="action-btn" onclick="goToProfile()">
+                        <i class="fas fa-user-circle"></i>
+                        <span>View My Profile</span>
+                    </button>
+                    <button class="action-btn" onclick="goToVerifyBvn()">
+                        <i class="fas fa-id-card"></i>
+                        <span>Verify BVN</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column - Profile -->
+            <div class="content-card">
+                <div class="profile-section">
+                    <div class="profile-avatar" id="profileAvatar">U</div>
+                    <h4 id="profileName">User Profile</h4>
+                    <p id="profileEmail">user@example.com</p>
+                    
+                    <div class="stats-section">
+                        <div class="stat-item">
+                            <h5>0</h5>
+                            <p>Investments</p>
+                        </div>
+                        <div class="stat-item">
+                            <h5>0</h5>
+                            <p>Savings</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        // Load user data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+        });
+
+        function loadUserData() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            
+            if (!userData || !userData.firstName) {
+                // Redirect to login if not authenticated
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Populate user information
+            const fullName = `${userData.firstName} ${userData.lastName}`;
+            const userName = userData.firstName;
+            
+            document.getElementById('userName').textContent = fullName;
+            document.getElementById('userGreeting').textContent = `Welcome back, ${userName}! You're all set up and ready to start investing and saving with Cowrywise.`;
+            
+            document.getElementById('userEmail').textContent = userData.email || '-';
+            document.getElementById('userUsername').textContent = userData.username || '-';
+            document.getElementById('userPhone').textContent = userData.phone || '-';
+            
+            document.getElementById('profileName').textContent = fullName;
+            document.getElementById('profileEmail').textContent = userData.email || '-';
+            
+            // Create avatar with initials
+            const initials = (userData.firstName.charAt(0) + userData.lastName.charAt(0)).toUpperCase();
+            document.getElementById('profileAvatar').textContent = initials;
+        }
+
+        function goToInvestment() {
+            window.location.href = 'investment.html';
+        }
+
+        function goToSavings() {
+            window.location.href = 'saving.html';
+        }
+
+        function goToProfile() {
+            window.location.href = 'complete-profile.html';
+        }
+
+        function goToVerifyBvn() {
+            window.location.href = 'verifybvn.html';
+        }
+
+        function logout() {
+            // Clear only current session data, keep allUserAccounts for login
+            localStorage.removeItem('userData');
+            localStorage.removeItem('userPin');
+            localStorage.removeItem('userEmail');
+            // NOTE: allUserAccounts is preserved so users can login again
+            
+            Toastify({
+                text: "Logged out successfully!",
+                duration: 2000,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "green",
+                    color: "white"
+                }
+            }).showToast();
+            
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 500);
+        }
+
+        // Password toggle (if needed on dashboard)
+        const togglePassword = document.getElementById('togglePassword');
+        if (togglePassword) {
+            togglePassword.addEventListener('click', () => {
+                const passInput = document.getElementById('pass');
+                if (passInput.type === 'password') {
+                    passInput.type = 'text';
+                    togglePassword.classList.remove('fa-eye');
+                    togglePassword.classList.add('fa-eye-slash');
+                } else {
+                    passInput.type = 'password';
+                    togglePassword.classList.remove('fa-eye-slash');
+                    togglePassword.classList.add('fa-eye');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

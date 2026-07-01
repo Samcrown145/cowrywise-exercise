@@ -7,6 +7,21 @@
     <title>Complete Your Profile</title>
     <link rel="stylesheet" href="complete-profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+        // Route Protection - Redirect if not from signup/Google flow
+        (function() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            
+            // Check if user came from Google sign-in or signup (has email or displayName)
+            if (!userData || (!userData.email && !userData.displayName)) {
+                // User didn't come from proper signup flow - redirect to signup
+                setTimeout(() => {
+                    window.location.href = 'signup.html';
+                }, 500);
+            }
+        })();
+    </script>
 </head>
 
 <body>
@@ -236,7 +251,42 @@ function validateForm() {
 }
 
 function createAcc() {
- window.location.href = 'EnterPin.html';
+    const userData = JSON.parse(localStorage.getItem('userData')) || {};
+    
+    // Save profile data
+    const profileData = {
+        ...userData,
+        firstName: firstNameInput.value.trim(),
+        lastName: lastNameInput.value.trim(),
+        username: usernameInput.value.trim(),
+        phone: phoneInput.value.trim(),
+        password: passwordInput.value.trim(),
+        isHalal: document.getElementById('halalToggle').checked,
+        createdAt: new Date().toISOString()
+    };
+    
+    localStorage.setItem('userData', JSON.stringify(profileData));
+    localStorage.setItem('userEmail', profileData.email || profileData.username);
+    
+    // Save to persistent accounts list (for login purposes)
+    const allUserAccounts = JSON.parse(localStorage.getItem('allUserAccounts')) || [];
+    
+    // Check if account already exists (by email)
+    const existingIndex = allUserAccounts.findIndex(acc => acc.email === profileData.email);
+    
+    if (existingIndex >= 0) {
+        // Update existing account
+        allUserAccounts[existingIndex] = profileData;
+    } else {
+        // Add new account
+        allUserAccounts.push(profileData);
+    }
+    
+    localStorage.setItem('allUserAccounts', JSON.stringify(allUserAccounts));
+    
+    setTimeout(() => {
+        window.location.href = 'EnterPin.html';
+    }, 500);
 }
 
 
@@ -271,7 +321,21 @@ modalOverlay.addEventListener('click', function(e) {
   }
 });
  
- 
+// Password toggle visibility
+const togglePasswordIcon = document.querySelector('.toggle-password');
+if (togglePasswordIcon) {
+    togglePasswordIcon.addEventListener('click', function() {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            togglePasswordIcon.classList.remove('fa-eye');
+            togglePasswordIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            togglePasswordIcon.classList.remove('fa-eye-slash');
+            togglePasswordIcon.classList.add('fa-eye');
+        }
+    });
+}
     
 </script>
 

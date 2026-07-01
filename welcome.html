@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cowrywise - Select Option</title>
     <link rel="stylesheet" href="welcome.css">
+
+    <script>
+        // Route Protection - Redirect if not authenticated
+        (function() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const userPin = localStorage.getItem('userPin');
+            
+            // Check if user is properly authenticated
+            if (!userData || !userData.firstName || !userData.password || !userPin) {
+                // User is not authenticated - redirect to login
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 500);
+            }
+        })();
+    </script>
 </head>
 <body>
 
@@ -32,7 +48,7 @@
 
             <button id="continueBtn" type="button" disabled>Continue</button>
             
-            <p class="social-proof">
+            <p class="social-proof" id="message">
                 <span class="heart-icon">💙</span> Over 2 million people build wealth on Cowrywise.
             </p>
         </section>
@@ -46,119 +62,59 @@
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-    const cards = document.querySelectorAll(".selection-card");
-    const continueBtn = document.getElementById("continueBtn");
+        const nameSpan = document.getElementById("dynamicName");
+        const cards = document.querySelectorAll(".selection-card");
+        const continueBtn = document.getElementById("continueBtn");
+        const message = document.getElementById("message");
 
-    cards.forEach(card => {
-        card.addEventListener("click", () => {
-            
-            // 1. Check if item clicked is already active, if so exit execution
-            if (card.classList.contains("selected")) return;
+        const savedName = localStorage.getItem("currentUserName");
+        const savedEmail = localStorage.getItem("userEmail");
 
-            // 2. Remove "selected" tracking configuration from the other card
-            cards.forEach(item => item.classList.remove("selected"));
-
-            // 3. Bind selection border style modification rule to currently targeted card
-            card.classList.add("selected");
-
-            // 4. Transform button design configuration to active blue layout variant
-            continueBtn.disabled = false;
-            continueBtn.classList.add("ready-state");
-        });
-    });
-
-    // Handle structural validation routing on execution payload release
-    continueBtn.addEventListener("click", () => {
-        const activeSelection = document.querySelector(".selection-card.selected");
-        if (activeSelection) {
-            const selectedType = activeSelection.getAttribute("data-type");
-            console.log(`User confirmed option selection: ${selectedType}`);
-            
-            // Re-route processing directly into your landing sequence asset
-            window.location.href = "saving.html";
+        if (savedName) {
+            nameSpan.textContent = savedName + "!";
+        } else if (savedEmail && savedEmail.includes("@")) {
+            const extractedName = savedEmail.split("@")[0];
+            const formattedName = extractedName.charAt(0).toUpperCase() + extractedName.slice(1);
+            nameSpan.textContent = formattedName + "!";
+        } else if (savedEmail) {
+            nameSpan.textContent = savedEmail;
+        } else {
+            nameSpan.textContent = "User!";
         }
-    });
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-    
-    // ====== PLACE THIS AT THE VERY TOP ======
-    const nameSpan = document.getElementById("dynamicName");
-    const savedName = localStorage.getItem('currentUserName');
+        const cardMessages = {
+            savings: "💙Build discipline and earn competitive return",
+            investments: "💙Invest in stocks, mutual friend and watch your money grow"
+        };
 
-    if (savedName) {
-        nameSpan.textContent = savedName + "!";
-    } else {
-        nameSpan.textContent = "Guest!"; // Backup if nothing was saved
-    }
-    // ========================================
+        cards.forEach((card) => {
+            card.addEventListener("click", () => {
+                if (card.classList.contains("selected")) return;
 
+                cards.forEach((item) => item.classList.remove("selected"));
+                card.classList.add("selected");
 
-    // Keep your card clicking code right below it:
-    document.addEventListener("DOMContentLoaded", () => {
-    
-    const nameSpan = document.getElementById("dynamicName");
-    
-    // 1. Pull the email using your exact key: 'userEmail'
-    const savedEmail = localStorage.getItem('userEmail'); 
+                const selectedType = card.getAttribute("data-type");
+                message.textContent = cardMessages[selectedType] || "💙Over 2 million people build wealth on Cowrywise.";
 
-    if (savedEmail) {
-        // 2. Extract the name from the email (e.g., "samcrown@gmail.com" -> "samcrown")
-        const extractedName = savedEmail.split('@')[0];
-        
-        // 3. Capitalize the first letter nicely (samcrown -> Samcrown)
-        const formattedName = extractedName.charAt(0).toUpperCase() + extractedName.slice(1);
-        
-        // 4. Inject it directly into the HTML span
-        nameSpan.textContent = formattedName + "!";
-    } else {
-        nameSpan.textContent = "User!"; // Fallback backup
-    }
+                continueBtn.disabled = false;
+                continueBtn.classList.add("ready-state");
+            });
+        });
 
-    // --- Keep your card selection logic directly below ---
-    const cards = document.querySelectorAll(".selection-card");
-    // ... rest of your code
-});
-});
+        continueBtn.addEventListener("click", () => {
+            const activeSelection = document.querySelector(".selection-card.selected");
+            if (activeSelection) {
+                const selectedType = activeSelection.getAttribute("data-type");
+                console.log(`User confirmed option selection: ${selectedType}`);
 
-document.addEventListener("DOMContentLoaded", () => {
-    
-    const nameSpan = document.getElementById("dynamicName");
-    
-    // 1. Pull the data out of the userEmail key
-    const savedEmail = localStorage.getItem('userEmail'); 
-
-    // DEBUGGING TOOL: This will print exactly what is inside your memory to the console
-    console.log("What is inside localStorage right now?:", savedEmail);
-
-    if (savedEmail && savedEmail.includes('@')) {
-        // 2. Turn "samcrown@gmail.com" into "samcrown"
-        const extractedName = savedEmail.split('@')[0];
-        
-        // 3. Make it look clean "Samcrown"
-        const formattedName = extractedName.charAt(0).toUpperCase() + extractedName.slice(1);
-        
-        nameSpan.textContent = formattedName;
-    } else if (savedEmail) {
-        // If it's saved but doesn't look like an email, just display whatever is there
-        nameSpan.textContent = savedEmail;
-    } else {
-        nameSpan.textContent = "User"; 
-    }
-
-    // --- Card Selection Functionality Below ---
-    const cards = document.querySelectorAll(".selection-card");
-    const continueBtn = document.getElementById("continueBtn");
-
-    cards.forEach(card => {
-        card.addEventListener("click", () => {
-            if (card.classList.contains("selected")) return;
-            cards.forEach(item => item.classList.remove("selected"));
-            card.classList.add("selected");
-            continueBtn.disabled = false;
-            continueBtn.classList.add("ready-state");
+                if (selectedType === "investments") {
+                    window.location.href = "investment.html";
+                } else {
+                    window.location.href = "saving.html";
+                }
+            }
         });
     });
-});
 </script>
 </html>
