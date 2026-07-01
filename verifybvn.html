@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Identity</title>
+    <link rel="stylesheet" href="verifyBvn.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h2>Verify your identity with your BVN</h2>
+            
+            <form id="verificationForm">
+                <div class="input-group">
+                    <input type="text" id="bvnInput" placeholder="Bank Verification Number" maxlength="11" inputmode="numeric">
+                    <span id="bvnError" class="error-message">Invalid BVN. Must be 11 digits.</span>
+                </div>
+                
+                <a href="#" class="helper-link" id="bvnHelpLink"> Why Do We Need Your BVN?</a>
+                
+                <div class="input-group">
+                    <input type="date" id="dobInput" placeholder="Date of Birth">
+                </div>
+                
+                <div class="form-footer">
+                    <a href="#" class="helper-link" id="bvnIssuesLink">Got Issues Adding Your BVN?</a>
+                    <button type="button" id="continueBtn" disabled >Continue</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="testimonial-section">
+            <div class="testimonial-content">
+                <h3>Invest with over 1 million customers like you</h3>
+                <p class="quote">"Wow, great app. It's the most reliable, trustworthy, saving and investment platform."</p>
+                
+                <div class="user-profile">
+                    <div class="avatar">
+                        <img style="width: 100%;border-radius: 40px;" src="/precious.png" alt="">
+                    </div>
+                    <span class="username">Precious Nmessomma</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="bvnModal">
+        <div class="modal-card">
+            <button class="close-btn" id="closeBvnModalBtn" aria-label="Close modal">&times;</button>
+            <div class="modal-icon">
+                 <img src="/download (58).svg" alt="">
+            </div>
+            <h3 class="modal-title">Why do we need your BVN?</h3>
+            <p class="modal-text">With your BVN we verify your full name, date of birth and gender. Nothing else.</p>
+            <div class="modal-actions">
+                <button class="got-it-btn" id="gotItBvnBtn">Got It</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="issuesModal">
+        <div class="modal-card has-banner">
+            <button class="close-btn" id="closeIssuesModalBtn" aria-label="Close modal">&times;</button>
+            
+            <div class="modal-banner">
+                <img src="/imageye___-_imgi_15_bvn-illustration.png" alt="BVN Help Illustration">
+            </div>
+
+            <div class="modal-body-content">
+                <h3 class="modal-title">Can’t remember your BVN</h3>
+                <p class="modal-text">Dial the code <span class="highlight-text">*565*0#</span> with the phone number you used for your account creation. Please note that you’ll be charged a fee by your mobile operator</p>
+
+                <h3 class="modal-title">Error Validating BVN</h3>
+                <p class="modal-text">This is probably because your date of birth and BVN do not match the one on the NIBSS portal. Please contact support for further assistance.</p>
+
+                <h3 class="modal-title">Don’t have a BVN</h3>
+                <p class="modal-text mb-0">Visit the nearest bank and fill the BVN enrollment form.</p>
+                <div class="modal-actions">
+                    <button class="got-it-btn" id="gotItIssuesBtn">Got It</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    const bvnInput = document.getElementById('bvnInput');
+    const dobInput = document.getElementById('dobInput');
+    const bvnError = document.getElementById('bvnError');
+    const continueBtn = document.getElementById('continueBtn');
+
+    function isOnlyDigits(string) {
+        return /^\d+$/.test(string);
+    }
+
+   
+    let isBvnValid = false;
+    let isDobValid = false;
+
+    function validateForm() {
+        const bvnValue = bvnInput.value.trim();
+        const dobValue = dobInput.value;
+        
+        if (bvnValue.length > 0) {
+            if (bvnValue.length === 11 && isOnlyDigits(bvnValue)) {
+                bvnError.style.display = 'none';
+                isBvnValid = true;
+            } else {
+                bvnError.style.display = 'block';
+                isBvnValid = false;
+            }
+        } else {
+            bvnError.style.display = 'none';  
+            isBvnValid = false;  
+        }
+     
+        isDobValid = dobValue !== "";
+     
+        if (isBvnValid && isDobValid) {
+            continueBtn.disabled = false;
+            continueBtn.classList.add('active');
+        } else {
+            continueBtn.disabled = true;
+            continueBtn.classList.remove('active');
+        }
+    }
+
+   
+    bvnInput.addEventListener('input', validateForm);
+    dobInput.addEventListener('change', validateForm);
+
+ 
+    continueBtn.addEventListener('click', function() {
+        if (isBvnValid && isDobValid) {
+            window.location.href = 'welcome.html';
+        }
+    });
+
+
+       
+
+        bvnInput.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '');
+            validateForm();
+        });
+
+        dobInput.addEventListener('change', validateForm);
+
+        const bvnHelpLink = document.getElementById('bvnHelpLink');
+        const bvnModal = document.getElementById('bvnModal');
+        const closeBvnModalBtn = document.getElementById('closeBvnModalBtn');
+        const gotItBvnBtn = document.getElementById('gotItBvnBtn');
+
+        bvnHelpLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            bvnModal.classList.add('open');
+        });
+
+        closeBvnModalBtn.addEventListener('click', () => {
+            bvnModal.classList.remove('open');
+        });
+
+        gotItBvnBtn.addEventListener('click', () => {
+            bvnModal.classList.remove('open');
+        });
+
+        bvnModal.addEventListener('click', (e) => {
+            if (e.target === bvnModal) {
+                bvnModal.classList.remove('open');
+            }
+        });
+
+        const bvnIssuesLink = document.getElementById('bvnIssuesLink');
+        const issuesModal = document.getElementById('issuesModal');
+        const closeIssuesModalBtn = document.getElementById('closeIssuesModalBtn');
+        const gotItIssuesBtn = document.getElementById('gotItIssuesBtn');
+
+        bvnIssuesLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            issuesModal.classList.add('open');
+        });
+
+        closeIssuesModalBtn.addEventListener('click', () => {
+            issuesModal.classList.remove('open');
+        });
+
+        gotItIssuesBtn.addEventListener('click', () => {
+            issuesModal.classList.remove('open');
+        });
+
+        issuesModal.addEventListener('click', (e) => {
+            if (e.target === issuesModal) {
+                issuesModal.classList.remove('open');
+            }
+        });
+
+        // INSIDE YOUR BVN/DOB PAGE SCRIPT:
+ 
+    </script>
+</body>
+</html>

@@ -8,6 +8,9 @@
     <link rel="icon" href="./cowry.webp">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./responsiveness.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
 </head>
 
 <body>
@@ -16,128 +19,132 @@
         <img src="./download (19).svg" alt="">
     </div>
 
-    <div class="Box-Sign-in">
-        <div style="display: flex;justify-content: space-around;">
-            <div class="Box-Sign">
-                <div class="start-container">
-                    <h1>Start your
-                        investment journey</h1> <br>
-                    <span style="color: #8597b3;font-size: 14px;">Got an account? <a
-                            style="font-size: 14px; color: #0067f5;text-decoration: none;font-weight: 550;"
-                            href="./login.html">Sign in</a> <span>
-                </div>
-                <div> <br>
-                    <a href=""
-                        style="text-decoration: none; display: flex; align-items: center; border: 2px solid #e0e4eb; width: 41%;padding: 3px 16px;">
-                        <img src="./download (20).svg" alt="">
-                        <span style="color: #17396d;font-family: Arial, Helvetica, sans-serif;font-weight: 550;">Sign in
-                            with Google</span>
-                    </a>
-                </div> <br>
-                <div class="divider">or</div> <br>
+    <body>
 
-                <form action="">
+        <div class="Box-Sign-in">
+            <div style="display: flex; justify-content: space-around;">
+                <div class="Box-Sign">
+                    <div class="start-container">
+                        <h1>Start your investment journey</h1>
+                        <br>
+                        <span style="color: #8597b3; font-size: 14px;">
+                            Got an account?
+                            <a style="font-size: 14px; color: #0067f5; text-decoration: none; font-weight: 550;"
+                                href="./login.html">Sign in</a>
+                        </span>
+                    </div>
+
+                    <div>
+                        <br>
+                        <button
+                            style="text-decoration: none; background-color: white; display: flex; align-items: center; justify-content: center; border: 2px solid #e0e4eb; width: 41%; padding: 3px 16px; cursor: pointer;"
+                            onclick="googleSign()">
+                            <img src="./download (20).svg" alt="Google Logo">
+                            <span
+                                style="color: #17396d; font-family: Arial, Helvetica, sans-serif; font-weight: 550;">Sign
+                                in with Google</span>
+                        </button>
+                    </div>
+                    <br>
+                    <div class="divider">or</div>
+                    <br>
+
                     <div class="input-container">
                         <input type="email" id="email" placeholder=" " required>
                         <label for="email">Email Address</label>
+                        <div id="errorMessage" class="error-container hidden">
+                            <i class="fas fa-exclamation-circle error-icon"></i>
+                            <span></span>
+                        </div>
                     </div>
-                </form>
-                <a href="">
+                    <br>
+
                     <button
-                        style="color: white;text-decoration: none;background-color: #0067f5;font-family: Arial, Helvetica, sans-serif;font-size: 16px;border: 1px solid;padding: 15px 30px;border-radius: 7px;font-weight: 600;width: 100%;">Continue</button>
-                </a>
-            </div>
-
-            <div class="dont-1" style="margin: 0px;">
-                <h1 style="font-family: sans-serif;font-size: 24px;color: #17396d; margin-top: 20px;">Don’t wait to
-                    start</h1>
-                <p style="color: 
-RGB(108, 130, 163);font-size: 16px;margin-bottom: 20px;">See how much you could have earned in <br> the past few years
-                </p>
-                <a href=""
-                    style="text-decoration: none;background-color: white;border: 1px solid white;border-radius: 20px;padding: 3px 10px;">
-                    <button style="color: #0067f5;font-weight: 550; border: none; background: transparent;"> ✨See what you missed ></button>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div style="position: relative;">
-        <img class="img-svg" src="./auth-bg.svg" alt="">
-    </div>
-    <div class="help-section1" style="display: flex; margin: 10px 69px;gap: 220px; font-size: 12px;">
-        <div class="sec-license" style="display: flex;align-items: center;gap: 10px;">
-            <img style="width: 7%;" class="sec-logo" src="./imageye___-_imgi_1_sec-logo.uViKvy1J.png" alt="SEC Logo">
-            <p class="sec-text">Cowrywise is licensed by the SEC</p>
-        </div>
-
-        <a style="text-decoration: none;" href="#" class="need-help-link">Need Help?</a>
-    </div>
-
-    <!-- Bento Grid Section
-    <div class="bento-container">
-        <div class="card span-2">
-            <div class="text-card">
-                <h2>Secure your future. <span>Invest with confidence.</span></h2>
-                <p>Join over 1 million people who use Cowrywise to plan, save and invest their money securely.</p>
-            </div>
-        </div>
-        <div class="card row-2">
-            <div class="text-card">
-                <h2>Savings</h2>
-                <p>Create multiple savings plans and reach your goals faster with automated savings.</p>
-            </div>
-            <img src="./cowry.webp" alt="Savings" class="full-img" style="height: 200px; object-fit: contain; margin-top: auto;">
-        </div>
-        <div class="card">
-            <div class="text-card">
-                <h2>Mutual Funds</h2>
-                <p>Invest in professionally managed portfolios.</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="text-card">
-                <h2>Stash</h2>
-                <p>Keep funds you want to invest later in your stash.</p>
-            </div>
-        </div> -->
-    <!-- </div> -->
-
-
-    <!-- <a style="display: flex; align-items: center; border: 2px solid #e0e4eb; width: 44%; text-decoration: none; padding: 8px 28px; color: black; font-weight: 500; border-radius: 5px;"
-                href="https://bit.ly/Cowrywise-Google-Auth">
-                <img src="./download (20).svg" alt="" style="margin-right: 8px;">
-                <p style="margin: 0px; font-size: 14px;">Sign In with Google</p>
-            </a> <br>
-
-            <div class="divider">or</div> <br>
-            <form action="">
-                <div class="floating-wrapper">
-                    <input type="text" id="username" class="floating-input" placeholder="" required>
-                    <label for="username" class="floating-label">Email address</label>
-                </div>
-                <div style="margin-top: 20px;">
-                    <a href=""><button class="btn3">Continue</button></a>
-                </div>
-            </form>
-            <div class="help-section1">
-                <div class="sec-license">
-                    <img class="sec-logo" src="./imageye___-_imgi_1_sec-logo.uViKvy1J.png" alt="SEC Logo">
-                    <p class="sec-text">Cowrywise is licensed by the SEC</p>
+                        style="color: white; text-decoration: none; background-color: #0067f5; font-family: Arial, Helvetica, sans-serif; font-size: 16px; border: 1px solid; padding: 15px 30px; border-radius: 7px; font-weight: 600; width: 100%; cursor: pointer;"
+                        id="btn" onclick="btn()">
+                        Continue
+                    </button>
                 </div>
 
-                <a href="#" class="need-help-link">Need Help?</a>
+                <div class="dont-1" style="margin: 0px;">
+                    <h1 style="font-family: sans-serif; font-size: 24px; color: #17396d; margin-top: 20px;">Don’t wait
+                        to start</h1>
+                    <p style="color: rgb(108, 130, 163); font-size: 16px; margin-bottom: 20px;">See how much you could
+                        have earned in <br> the past few years</p>
+                    <a href="#"
+                        style="text-decoration: none; background-color: white; border: 1px solid #0067f5; border-radius: 20px; padding: 5px 15px; color: #0067f5; font-weight: 550; display: inline-block;">
+                        ✨See what you missed &gt;
+                    </a>
+                </div>
             </div>
         </div>
 
-
-        <div class="flex-right">
-            <h2>Don’t wait to start</h2>
-            <p>See how much you could have earned in the past few years</p>
-            <button> ✨See what you missed ></button>
+        <div style="position: relative;">
+            <img class="img-svg" src="./auth-bg.svg" alt="">
         </div>
-        <img class="img-svg" src="./auth-bg.svg" alt="">
-    </div> -->
 
-</body>
+        <div class="help-section1" style="display: flex; margin: 10px 69px; gap: 220px; font-size: 12px;">
+            <div class="sec-license" style="display: flex; align-items: center; gap: 10px;">
+                <img style="width: 7%;" class="sec-logo" src="./imageye___-_imgi_1_sec-logo.uViKvy1J.png"
+                    alt="SEC Logo">
+                <p class="sec-text">Cowrywise is licensed by the SEC</p>
+            </div>
+            <a style="text-decoration: none;" href="#" class="need-help-link">Need Help?</a>
+        </div>
+
+    </body>
+
+    <script src="signup.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDThMga0C_4Z00olgnFb2U02HvI3hQiGsM",
+            authDomain: "cowrywiseproject-level1.firebaseapp.com",
+            projectId: "cowrywiseproject-level1",
+            storageBucket: "cowrywiseproject-level1.firebasestorage.app",
+            messagingSenderId: "494631458624",
+            appId: "1:494631458624:web:7b757935ad646b1dc78ca5",
+            measurementId: "G-JW3C58MBXL"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+        // const analytics = getAnalytics(app);
+
+        function googleSign() {
+            // alert('yipeee')
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user
+                    console.log(user)
+                    setTimeout(() => {
+                        window.location.href = 'EnterPin.html'
+                    }, 1000);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode);
+                    console.log(errorMessage);
+                })
+        }
+
+
+        window.googleSign = googleSign
+    </script>
+    </script>
+
 
 </html>

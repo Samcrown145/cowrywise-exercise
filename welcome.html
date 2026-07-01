@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cowrywise - Select Option</title>
+    <link rel="stylesheet" href="welcome.css">
+</head>
+<body>
+
+    <main class="main-container">
+        
+        <section class="text-section">
+            <p class="welcome-msg">Welcome, <span id="dynamicName" class="username"></span></p>
+            <h1 class="main-heading">What would you<br>like to do?</h1>
+        </section>
+
+        <section class="interactive-section">
+            <div class="cards-wrapper">
+                
+                <div class="selection-card" data-type="savings">
+                    <h2 class="card-title text-savings">Savings</h2>
+                    <img src="/imageye___-_imgi_1_savings.webp" alt="Savings Safe" class="card-image">
+                </div>
+
+                <div class="selection-card" data-type="investments">
+                    <h2 class="card-title text-investments">Investments</h2>
+                    <img src="/imageye___-_imgi_2_invest.webp" alt="Investments Basket" class="card-image">
+                </div>
+
+            </div>
+
+            <button id="continueBtn" type="button" disabled>Continue</button>
+            
+            <p class="social-proof">
+                <span class="heart-icon">💙</span> Over 2 million people build wealth on Cowrywise.
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="legal-footer">
+        LICENSED BY THE SEC
+    </footer>
+
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".selection-card");
+    const continueBtn = document.getElementById("continueBtn");
+
+    cards.forEach(card => {
+        card.addEventListener("click", () => {
+            
+            // 1. Check if item clicked is already active, if so exit execution
+            if (card.classList.contains("selected")) return;
+
+            // 2. Remove "selected" tracking configuration from the other card
+            cards.forEach(item => item.classList.remove("selected"));
+
+            // 3. Bind selection border style modification rule to currently targeted card
+            card.classList.add("selected");
+
+            // 4. Transform button design configuration to active blue layout variant
+            continueBtn.disabled = false;
+            continueBtn.classList.add("ready-state");
+        });
+    });
+
+    // Handle structural validation routing on execution payload release
+    continueBtn.addEventListener("click", () => {
+        const activeSelection = document.querySelector(".selection-card.selected");
+        if (activeSelection) {
+            const selectedType = activeSelection.getAttribute("data-type");
+            console.log(`User confirmed option selection: ${selectedType}`);
+            
+            // Re-route processing directly into your landing sequence asset
+            window.location.href = "saving.html";
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // ====== PLACE THIS AT THE VERY TOP ======
+    const nameSpan = document.getElementById("dynamicName");
+    const savedName = localStorage.getItem('currentUserName');
+
+    if (savedName) {
+        nameSpan.textContent = savedName + "!";
+    } else {
+        nameSpan.textContent = "Guest!"; // Backup if nothing was saved
+    }
+    // ========================================
+
+
+    // Keep your card clicking code right below it:
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    const nameSpan = document.getElementById("dynamicName");
+    
+    // 1. Pull the email using your exact key: 'userEmail'
+    const savedEmail = localStorage.getItem('userEmail'); 
+
+    if (savedEmail) {
+        // 2. Extract the name from the email (e.g., "samcrown@gmail.com" -> "samcrown")
+        const extractedName = savedEmail.split('@')[0];
+        
+        // 3. Capitalize the first letter nicely (samcrown -> Samcrown)
+        const formattedName = extractedName.charAt(0).toUpperCase() + extractedName.slice(1);
+        
+        // 4. Inject it directly into the HTML span
+        nameSpan.textContent = formattedName + "!";
+    } else {
+        nameSpan.textContent = "User!"; // Fallback backup
+    }
+
+    // --- Keep your card selection logic directly below ---
+    const cards = document.querySelectorAll(".selection-card");
+    // ... rest of your code
+});
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    
+    const nameSpan = document.getElementById("dynamicName");
+    
+    // 1. Pull the data out of the userEmail key
+    const savedEmail = localStorage.getItem('userEmail'); 
+
+    // DEBUGGING TOOL: This will print exactly what is inside your memory to the console
+    console.log("What is inside localStorage right now?:", savedEmail);
+
+    if (savedEmail && savedEmail.includes('@')) {
+        // 2. Turn "samcrown@gmail.com" into "samcrown"
+        const extractedName = savedEmail.split('@')[0];
+        
+        // 3. Make it look clean "Samcrown"
+        const formattedName = extractedName.charAt(0).toUpperCase() + extractedName.slice(1);
+        
+        nameSpan.textContent = formattedName;
+    } else if (savedEmail) {
+        // If it's saved but doesn't look like an email, just display whatever is there
+        nameSpan.textContent = savedEmail;
+    } else {
+        nameSpan.textContent = "User"; 
+    }
+
+    // --- Card Selection Functionality Below ---
+    const cards = document.querySelectorAll(".selection-card");
+    const continueBtn = document.getElementById("continueBtn");
+
+    cards.forEach(card => {
+        card.addEventListener("click", () => {
+            if (card.classList.contains("selected")) return;
+            cards.forEach(item => item.classList.remove("selected"));
+            card.classList.add("selected");
+            continueBtn.disabled = false;
+            continueBtn.classList.add("ready-state");
+        });
+    });
+});
+</script>
+</html>

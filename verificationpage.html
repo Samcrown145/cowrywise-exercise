@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Page</title>
+    <link rel="stylesheet" href="verificationpage.css">
+</head>
+
+<body>
+     
+    <div class="page-container">
+
+        <div class="left-section">
+            <div class="logo">
+                <img src="./download (19).svg" alt="">
+            </div>
+
+            <div class="card">
+                <h2>Enter the 6-digit code that we sent to </h2>
+                <span id="displayEmail" style="font-size: 1.2rem;color: blue;font-weight: 700;"></span> <br>
+                <a href="/signup.html" class="wrong-email">Wrong email?</a>
+
+                 
+                    <div class="input-group">
+                        <input type="number" id="code" placeholder="Code" maxlength="6" required />
+                    </div>
+
+                    <div class="form-footer">
+                        <p class="resend-text">Didn't get OTP? <a href="#">Resend</a></p>
+                        <button class="btn-continue" onclick="continueBtn()" id="continue">Continue</button>
+                    </div>
+                
+            </div>
+
+            <div class="footer-license" style="display: flex;align-items: center;justify-content: space-between;">
+                <div style="display: flex;align-items: center;gap: 10px;">
+                    <img style="width: 5%;" src="/imageye___-_imgi_1_sec-logo.uViKvy1J.png" alt="">
+                    <span>Cowrywise is licensed by the SEC</span>
+                </div>  
+                <div class="help-link">
+                    <a href="#">Need Help?</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="testimonial-content">
+                <h1>Invest with over 1 million customers like you</h1>
+                <p class="quote">Wow, great app. It's the most reliable, trustworthy, saving and investment platform.
+                </p>
+
+                <div class="profile">
+                    <img src="/precious.png" alt="Precious Nmessomma" class="profile-img">
+                    <div class="profile-info">
+                        <strong>Precious Nmessomma</strong>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</body>
+<script>
+const displayEmail = document.getElementById('displayEmail');
+const savedEmail = localStorage.getItem('userEmail');
+displayEmail.textContent = savedEmail;
+
+const codeInput = document.getElementById('code');
+const btn_Continue = document.getElementById('continue');
+
+
+codeInput.addEventListener('input', () => {
+    if (codeInput.value.length === 6) {
+        btn_Continue.style.backgroundColor = 'blue';
+      
+    } else {
+        btn_Continue.style.backgroundColor = '#7aa9ff';
+      
+    }
+});
+
+
+function continueBtn() {
+    if (codeInput.value.length === 6) {
+        window.location.href = "complete-profile.html";
+    } else {
+        alert('Please enter exactly 6 digits');
+    }
+}
+
+
+ 
+</script>
+</html>

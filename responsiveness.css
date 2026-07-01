@@ -1,11 +1,12 @@
+html {
+    overflow-x: hidden !important;
+}
+
 @media screen and (max-width:606px){ 
     body {
-        display: flex;
-        /* Ensure body takes full width and content stacks */
         width: 100%;
-        min-width: 320px; /* Prevent content from becoming too small */
-        overflow-x: hidden !important; /* Prevent horizontal scrolling */
-        flex-direction: column;
+        min-width: 320px;  
+        overflow-x: hidden !important;  
      }
      .form-container {
         display: contents; 
@@ -167,9 +168,9 @@
     }
 
      
-    .Box-Sign br {
+    /* .Box-Sign br {
         display: none !important;
-    }
+    } */
 
     .start-container h1 {
         font-size: 32px !important;
@@ -572,8 +573,8 @@
     .home-section {
       margin: 0 !important;
     }
+}
 
-     
 @media screen and (min-width: 607px) and (max-width: 1000px) {
     .form-container, .Log-in-logo {
        margin-left: 40px !important;
@@ -623,5 +624,4 @@
     .img-svg {
       display: none;
     }
-}
 }

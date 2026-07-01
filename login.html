@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="./responsiveness.css">
     <link rel="icon" href="./cowry.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+ 
 </head>
 
 <body style="background-color: #f4f7fa;">
@@ -30,16 +32,16 @@
 
 
         <div class="box">
-            <form action="">
+            <!-- <form action=""> -->
                 <div class="form" style="display: flex; flex-direction: column; width: 80%; margin: 60px auto;">
 
                     <div class="google-apple"
                         style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px;">
-                        <a style="display: flex; align-items: center; border: 2px solid #e0e4eb; width: 48%; text-decoration: none; padding: 8px 28px; color: black; font-weight: 500; border-radius: 5px;"
-                            href="">
+                        <button style="display: flex; align-items: center; border: 2px solid #e0e4eb; width: 48%; text-decoration: none; padding: 8px 28px; color: black; font-weight: 500; border-radius: 5px;background-color: white;"
+                            onclick="googleSign()">
                             <img src="./download (20).svg" alt="" style="margin-right: 8px;">
                             <p style="margin: 0px; font-size: 14px;">Sign In with Google</p>
-                        </a>
+                </button>
 
                         <a style="display: flex; align-items: center; border: 2px solid #e0e4eb; width: 48%; text-decoration: none; padding: 8px 29px; color: black; font-weight: 500; border-radius: 5px;"
                             href="">
@@ -59,8 +61,8 @@
                             <label for="pass">Password</label>
                         </div>
                         <i class="fa-solid fa-eye" id="togglePassword"></i>
-                        <a href="">Forget password?</a> <br>
-                        <button>Sign in</button>
+                        <a href="">Forget password?</a> <br> <br>
+                        <button style="width: 100%;">Sign in</button>
                     </form>
                 </div> <br>
                 <div class="help-section" style="display: flex; justify-content: space-between;">
@@ -69,12 +71,59 @@
                             href="">Chat with us</a></span>
                     <a style="color: #6c83a3; text-decoration: none; font-size: 14px;" href="">Privacy | Terms</a>
                 </div>
-            </form>
+            <!-- </form> -->
         </div>
 
     </div>
 
 
 </body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+ <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
 
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDThMga0C_4Z00olgnFb2U02HvI3hQiGsM",
+            authDomain: "cowrywiseproject-level1.firebaseapp.com",
+            projectId: "cowrywiseproject-level1",
+            storageBucket: "cowrywiseproject-level1.firebasestorage.app",
+            messagingSenderId: "494631458624",
+            appId: "1:494631458624:web:7b757935ad646b1dc78ca5",
+            measurementId: "G-JW3C58MBXL"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+        // const analytics = getAnalytics(app);
+
+        function googleSign() {
+            // alert('yipeee')
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user
+                    console.log(user)
+                     setTimeout(() => {
+                        window.location.href = 'EnterPin.html'
+                    }, 1000);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode);
+                    console.log(errorMessage);
+                })
+        }
+
+
+        window.googleSign = googleSign
+    </script>
 </html>
