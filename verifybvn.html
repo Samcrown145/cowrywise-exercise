@@ -149,6 +149,27 @@
  
     continueBtn.addEventListener('click', function() {
         if (isBvnValid && isDobValid) {
+            const userData = JSON.parse(localStorage.getItem('userData')) || {};
+            const bvnVal = bvnInput.value.trim();
+            const dobVal = dobInput.value;
+            
+            // Save to current user session data
+            userData.bvn = bvnVal;
+            userData.dob = dobVal;
+            localStorage.setItem('userData', JSON.stringify(userData));
+            
+            // Sync to permanent accounts database
+            const allUserAccounts = JSON.parse(localStorage.getItem('allUserAccounts')) || [];
+            const index = allUserAccounts.findIndex(acc => acc.email === userData.email);
+            if (index >= 0) {
+                allUserAccounts[index] = {
+                    ...allUserAccounts[index],
+                    bvn: bvnVal,
+                    dob: dobVal
+                };
+                localStorage.setItem('allUserAccounts', JSON.stringify(allUserAccounts));
+            }
+            
             window.location.href = 'welcome.html';
         }
     });

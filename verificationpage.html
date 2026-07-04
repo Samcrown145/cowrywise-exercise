@@ -8,16 +8,14 @@
     <link rel="stylesheet" href="verificationpage.css">
 
     <script>
-        // Route Protection - Redirect if not authenticated
+        // Route Protection - Redirect if not from signup flow
         (function() {
-            const userData = JSON.parse(localStorage.getItem('userData'));
-            const userPin = localStorage.getItem('userPin');
+            const userEmail = localStorage.getItem('userEmail');
             
-            // Check if user is properly authenticated
-            if (!userData || !userData.firstName || !userData.password || !userPin) {
-                // User is not authenticated - redirect to login
+            // Check if user entered email in signup
+            if (!userEmail) {
                 setTimeout(() => {
-                    window.location.href = 'login.html';
+                    window.location.href = 'signup.html';
                 }, 500);
             }
         })();

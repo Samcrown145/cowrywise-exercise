@@ -1,214 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Cowrywise</title>
-    <link rel="icon" href="./cowry.webp">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./responsiveness.css">
-    <link rel="stylesheet" href="./dashboard.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <script>
-        // Route Protection - only redirect when there is no active session
-        (function() {
-            const userData = JSON.parse(localStorage.getItem('userData'));
-            const hasActiveSession = userData && (userData.email || userData.displayName || userData.uid);
-
-            if (!hasActiveSession) {
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 500);
-            }
-        })();
-    </script>
-
+    <title>Fully Responsive Interactive Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
 </head>
+
 <body>
-    <!-- Navigation Bar -->
-    <div class="navbar-dashboard">
-        <div class="logo-section">
-            <img src="./download (19).svg" alt="Cowrywise Logo">
-            <span>Cowrywise</span>
-        </div>
-        <div class="nav-links">
-            <a href="#" onclick="goToInvestment()">Invest</a>
-            <a href="#" onclick="goToSavings()">Save</a>
-            <a href="#" onclick="goToProfile()">Profile</a>
-            <button class="logout-btn" onclick="logout()">Logout</button>
-        </div>
-    </div>
 
-    <!-- Main Container -->
     <div class="dashboard-container">
-        <!-- Welcome Section -->
-        <div class="welcome-section">
-            <div id="loadingMessage" class="loading-message" style="display: none;">
-                Loading your profile...
+        <!-- Mobile Toggle Top Bar -->
+        <div class="mobile-header">
+            <div class="hamburger-menu" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            
-            <div class="welcome-text">
-                <h1>Welcome back! 👋</h1>
-                <h2 id="userName">User</h2>
-                <p id="userGreeting">You're all set up and ready to start investing and saving with Cowrywise.</p>
-            </div>
-
-            <!-- User Info Grid -->
-            <div class="user-info-grid">
-                <div class="info-card">
-                    <h3>Email Address</h3>
-                    <p id="userEmail">-</p>
-                </div>
-                <div class="info-card">
-                    <h3>Username</h3>
-                    <p id="userUsername">-</p>
-                </div>
-                <div class="info-card">
-                    <h3>Phone Number</h3>
-                    <p id="userPhone">-</p>
-                </div>
-            </div>
+            <div class="logo-icon">🌀</div>
+            <div class="avatar-clickable" onclick="switchTab('profile')">👤</div>
         </div>
 
-        <!-- Main Content Grid -->
-        <div class="main-content">
-            <!-- Left Column - Actions -->
-            <div class="content-card">
-                <h3>What would you like to do?</h3>
-                <div class="action-buttons">
-                    <button class="action-btn" onclick="goToInvestment()">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Start Investing</span>
-                    </button>
-                    <button class="action-btn" onclick="goToSavings()">
-                        <i class="fas fa-piggy-bank"></i>
-                        <span>Start Saving</span>
-                    </button>
-                    <button class="action-btn" onclick="goToProfile()">
-                        <i class="fas fa-user-circle"></i>
-                        <span>View My Profile</span>
-                    </button>
-                    <button class="action-btn" onclick="goToVerifyBvn()">
-                        <i class="fas fa-id-card"></i>
-                        <span>Verify BVN</span>
-                    </button>
-                </div>
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="dashboardSidebar">
+            <div class="logo-section">
+                <div class="logo-icon">🌀</div>
             </div>
 
-            <!-- Right Column - Profile -->
-            <div class="content-card">
-                <div class="profile-section">
-                    <div class="profile-avatar" id="profileAvatar">U</div>
-                    <h4 id="profileName">User Profile</h4>
-                    <p id="profileEmail">user@example.com</p>
-                    
-                    <div class="stats-section">
-                        <div class="stat-item">
-                            <h5>0</h5>
-                            <p>Investments</p>
-                        </div>
-                        <div class="stat-item">
-                            <h5>0</h5>
-                            <p>Savings</p>
-                        </div>
+            <div class="user-greeting">
+                <span class="greet-text">Hey</span>
+                <span id="username-display" class="user-name"></span>
+            </div>
+
+            <nav class="menu-items">
+                <button class="menu-btn active" data-tab="home" onclick="switchTab('home')">🏠 Home</button>
+                <button class="menu-btn" data-tab="save" onclick="switchTab('save')">🔒 Save</button>
+                <button class="menu-btn" data-tab="invest" onclick="switchTab('invest')">📊 Invest</button>
+                <button class="menu-btn" data-tab="payment" onclick="switchTab('payment')">💳 Payment</button>
+                <button class="menu-btn" data-tab="stash" onclick="switchTab('stash')">💰 Stash</button>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Desktop Top Header Navbar -->
+            <header class="top-navbar">
+                <h2 id="page-title">ACCOUNT OVERVIEW</h2>
+                <div class="header-right">
+                    <span class="badge seed-badge">🌱 Seed</span>
+                    <span class="notification-icon">🔔</span>
+                    <div class="avatar-clickable" onclick="switchTab('profile')">
+                        <div class="avatar">👤</div>
                     </div>
                 </div>
+            </header>
+
+            <!-- Dashboard Dynamic Tabs Container -->
+            <div class="content-body">
+
+                <!-- Home Content View (photo_2026-07-03_08-01-58_2.jpg) -->
+                <section id="tab-home" class="dashboard-tab active-tab">
+                    <div class="sub-nav-tabs">
+                        <span class="sub-link active">Home</span>
+                        <span class="sub-link">Portfolio</span>
+                    </div>
+                    <div class="grid-layout">
+                        <div class="balance-card-blue">
+                            <p>Naira Balance 👁️</p>
+                            <h1>₦ 1,006.<small>42</small></h1>
+                            <div class="card-footer">+ ₦6.42 return in Jun </div>
+                        </div>
+                        <div class="quick-actions">
+                            <h3>Add cash</h3>
+                            <div class="action-buttons">
+                                <button>₦ 20K</button><button>₦ 50K</button><button>₦ 100K</button>
+                                <button>$ 100</button><button>$ 200</button><button class="plus-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Save Content View (photo_2026-07-03_08-02-08_2.jpg) -->
+                <section id="tab-save" class="dashboard-tab">
+                    <div class="balance-summary">
+                        <p>Savings Balance 👁️</p>
+                        <h2>₦ 0.<small>00</small></h2>
+                    </div>
+                    <h3>Save by myself</h3>
+                    <div class="card-grid">
+                        <div class="saving-box blue-box">
+                            <h4>General</h4><span class="status">EMPTY</span>
+                        </div>
+                        <div class="saving-box purple-box">
+                            <h4>Emergency</h4><span class="status">EMPTY</span>
+                        </div>
+                        <div class="saving-box green-box">
+                            <h4>Home</h4><span class="status">EMPTY</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Invest Content View (photo_2026-07-03_08-02-19_2.jpg) -->
+                <section id="tab-invest" class="dashboard-tab">
+                    <h3>Investments</h3>
+                    <div class="investment-card">
+                        <div class="inv-header">💼 Naira Funds</div>
+                        <p>₦ 1,006.42</p>
+                    </div>
+                </section>
+
+                <!-- Payment Content View (photo_2026-07-03_08-02-23_2.jpg) -->
+                <section id="tab-payment" class="dashboard-tab">
+                    <div class="empty-state">
+                        <div class="bank-icon">🏛️</div>
+                        <h3>My Accounts</h3>
+                        <p>You haven't added an account. Tap the plus icon above to add one.</p>
+                    </div>
+                </section>
+
+                <!-- Stash Content View (photo_2026-07-03_08-02-27_2.jpg) -->
+                <section id="tab-stash" class="dashboard-tab">
+                    <h3>Naira Stash</h3>
+                    <p>Idle Balance 👁️</p>
+                    <h2>₦ 0.<small>00</small></h2>
+                </section>
+
+                <!-- PROFILE CONTAINER (Parent View - handles photo_2026-07-03_08-02-31_3.jpg, photo_2026-07-03_08-02-37_3.jpg, photo_2026-07-03_08-02-41_3.jpg) -->
+                <section id="tab-profile" class="dashboard-tab">
+                    <div class="sub-nav profile-sub-nav">
+                        <button class="sub-pill active" onclick="switchProfileSubTab('personal')">Personal</button>
+                        <button class="sub-pill" onclick="switchProfileSubTab('security')">Security</button>
+                        <button class="sub-pill" onclick="switchProfileSubTab('behaviour')">Behaviour</button>
+                    </div>
+
+                    <!-- SUB-TAB 1: Personal Details -->
+                    <div id="profile-personal" class="profile-sub-content active-sub-tab">
+                        <h3 class="section-heading">Personalize Details</h3>
+                        <div class="profile-meta-card">
+                            <div class="big-avatar">👤</div>
+                            <div class="meta-details">
+                                <h2 id="profile-fullname"></h2>
+                                <span class="badge seed-badge">🌱 Seed ›</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="profile-username" value="@shimbojr" readonly>
+                        </div>
+                    </div>
+
+                    <!-- SUB-TAB 2: Verified Information -->
+                    <div id="profile-security" class="profile-sub-content">
+                        <h3 class="section-heading">Verified Information</h3>
+                        <table class="info-table">
+                            <tr>
+                                <td><strong>Email Address</strong></td>
+                                <td id="profile-email"></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phone Number</strong></td>
+                                <td id="profile-phone"> 📝</td>
+                            </tr>
+                            <tr>
+                                <td><strong>BVN</strong></td>
+                                <td id="profile-bvn">221775****</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- SUB-TAB 3: Behaviour / Password -->
+                    <div id="profile-behaviour" class="profile-sub-content">
+                        <h3 class="section-heading">Password & PIN</h3>
+                        <div class="row-link-item">
+                            <div><strong>Update Password</strong></div>
+                            <span class="action-link">Change Password</span>
+                        </div>
+                    </div>
+                </section>
+
             </div>
-        </div>
+        </main>
     </div>
 
-    <!-- Scripts -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- JavaScript Interaction Layer Logic -->
     <script>
-        // Load user data on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            loadUserData();
-        });
+        // Fallback fallback default setup inside localStorage if keys are missing
+        if (!localStorage.getItem('username')) {
+            localStorage.setItem('username', 'Adeola');
+        }
 
-        function loadUserData() {
-            const userData = JSON.parse(localStorage.getItem('userData'));
-            
-            if (!userData || (!userData.email && !userData.displayName && !userData.uid)) {
-                window.location.href = 'login.html';
-                return;
+        function loadLocalStorageData() {
+            const userDataString = localStorage.getItem('userData');
+            if (userDataString) {
+                try {
+                    const userData = JSON.parse(userDataString);
+                    const firstName = userData.firstName || 'User';
+                    const lastName = userData.lastName || '';
+                    const fullName = `${firstName} ${lastName}`.trim();
+                    
+                    document.getElementById('username-display').textContent = firstName;
+                    document.getElementById('profile-fullname').textContent = fullName;
+                    
+                    if (userData.username) {
+                        document.getElementById('profile-username').value = `@${userData.username}`;
+                    }
+                    if (userData.email) {
+                        document.getElementById('profile-email').textContent = userData.email;
+                    }
+                    if (userData.phone) {
+                        document.getElementById('profile-phone').textContent = userData.phone + ' 📝';
+                    }
+                    if (userData.bvn) {
+                        // Show first few digits then mask the rest
+                        const bvn = userData.bvn.toString();
+                        document.getElementById('profile-bvn').textContent = bvn.substring(0, 6) + '****';
+                    } else {
+                         document.getElementById('profile-bvn').textContent = 'Not Provided';
+                    }
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                }
+            } else {
+                // Fallback
+                const storedName = localStorage.getItem('username');
+                if (storedName) {
+                    document.getElementById('username-display').textContent = storedName;
+                    document.getElementById('profile-fullname').textContent = storedName + " Siyanbola";
+                }
             }
-
-            const firstName = userData.firstName || userData.displayName?.split(' ')[0] || 'User';
-            const lastName = userData.lastName || '';
-            const fullName = [firstName, lastName].filter(Boolean).join(' ').trim() || 'User';
-            const userName = firstName;
-            
-            document.getElementById('userName').textContent = fullName;
-            document.getElementById('userGreeting').textContent = `Welcome back, ${userName}! You're all set up and ready to start investing and saving with Cowrywise.`;
-            
-            document.getElementById('userEmail').textContent = userData.email || '-';
-            document.getElementById('userUsername').textContent = userData.username || '-';
-            document.getElementById('userPhone').textContent = userData.phone || '-';
-            
-            document.getElementById('profileName').textContent = fullName;
-            document.getElementById('profileEmail').textContent = userData.email || '-';
-            
-            const initials = (firstName.charAt(0) + (lastName.charAt(0) || '')).toUpperCase();
-            document.getElementById('profileAvatar').textContent = initials;
         }
 
-        function goToInvestment() {
-            window.location.href = 'investment.html';
+        // Toggle mobile sidebar menu draw overlay drawer layout
+        function toggleSidebar() {
+            const sidebar = document.getElementById('dashboardSidebar');
+            sidebar.classList.toggle('open');
         }
 
-        function goToSavings() {
-            window.location.href = 'saving.html';
+        // Main Navigation Layout Tab Engine
+        function switchTab(tabId) {
+            document.querySelectorAll('.dashboard-tab').forEach(tab => tab.classList.remove('active-tab'));
+            document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(`tab-${tabId}`).classList.add('active-tab');
+
+            const sidebarBtn = document.querySelector(`.menu-btn[data-tab="${tabId}"]`);
+            if (sidebarBtn) sidebarBtn.classList.add('active');
+
+            document.getElementById('page-title').textContent = tabId.toUpperCase() + (tabId === 'home' ? ' OVERVIEW' : '');
+
+            // Reset profile nested subtabs dynamically if entering profile
+            if (tabId === 'profile') switchProfileSubTab('personal');
+
+            // Close responsive drawer sidebar upon navigation link click trigger on mobile
+            document.getElementById('dashboardSidebar').classList.remove('open');
         }
 
-        function goToProfile() {
-            window.location.href = 'complete-profile.html';
+        // Nested Profile Sub-tab Engine switcher layout
+        function switchProfileSubTab(subTabId) {
+            document.querySelectorAll('.profile-sub-content').forEach(c => c.classList.remove('active-sub-tab'));
+            document.querySelectorAll('.sub-pill').forEach(p => p.classList.remove('active'));
+
+            document.getElementById(`profile-${subTabId}`).classList.add('active-sub-tab');
+
+            const targetedPill = Array.from(document.querySelectorAll('.sub-pill')).find(p => p.textContent.toLowerCase() === subTabId);
+            if (targetedPill) targetedPill.classList.add('active');
         }
 
-        function goToVerifyBvn() {
-            window.location.href = 'verifybvn.html';
-        }
-
-        function logout() {
-            // Clear only current session data, keep allUserAccounts for login
-            localStorage.removeItem('userData');
-            localStorage.removeItem('userPin');
-            localStorage.removeItem('userEmail');
-            // NOTE: allUserAccounts is preserved so users can login again
-            
-            Toastify({
-                text: "Logged out successfully!",
-                duration: 2000,
-                gravity: "top",
-                position: "center",
-                style: {
-                    background: "green",
-                    color: "white"
-                }
-            }).showToast();
-            
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 500);
-        }
-
-        // Password toggle (if needed on dashboard)
-        const togglePassword = document.getElementById('togglePassword');
-        if (togglePassword) {
-            togglePassword.addEventListener('click', () => {
-                const passInput = document.getElementById('pass');
-                if (passInput.type === 'password') {
-                    passInput.type = 'text';
-                    togglePassword.classList.remove('fa-eye');
-                    togglePassword.classList.add('fa-eye-slash');
-                } else {
-                    passInput.type = 'password';
-                    togglePassword.classList.remove('fa-eye-slash');
-                    togglePassword.classList.add('fa-eye');
-                }
-            });
-        }
+        // Run application setup lifecycle sequence handlers
+        document.addEventListener("DOMContentLoaded", loadLocalStorageData);
     </script>
 </body>
+
 </html>

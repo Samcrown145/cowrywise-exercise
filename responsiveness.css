@@ -1,4 +1,4 @@
-html {
+﻿html {
     overflow-x: hidden !important;
 }
 
@@ -615,6 +615,7 @@ html {
        width: 100% !important;
     }
 
+
     .help-section1 {
        margin: 40px !important;
        gap: 0 !important;
@@ -623,5 +624,288 @@ html {
 
     .img-svg {
       display: none;
+    }
+}
+
+/* =====================================================
+   DASHBOARD — Mobile (max 768px)
+   Approach: hide desktop sidebar, show slide-in
+   drawer + sticky bottom navigation bar.
+   ===================================================== */
+
+/* Hide mobile-only elements on desktop */
+.mobile-topbar,
+.sidebar-backdrop,
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+
+    /* ---- Layout shell ---- */
+    body {
+        padding-top: 56px;
+        padding-bottom: 70px;
+    }
+
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    /* ---- Mobile top bar ---- */
+    .mobile-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 56px;
+        background: #ffffff;
+        border-bottom: 1px solid #eef2f5;
+        padding: 0 16px;
+        z-index: 1000;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    }
+
+    .hamburger-btn {
+        background: none;
+        border: none;
+        font-size: 22px;
+        cursor: pointer;
+        color: #2c3e50;
+        padding: 4px 8px;
+    }
+
+    .mobile-logo {
+        font-size: 17px;
+        font-weight: 700;
+        color: #2b6cb0;
+        letter-spacing: -0.3px;
+    }
+
+    .mobile-topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 20px;
+    }
+
+    /* ---- Sidebar drawer ---- */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 260px;
+        height: 100vh;
+        z-index: 1100;
+        background: #ffffff;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.12);
+        transition: left 0.28s cubic-bezier(0.4,0,0.2,1);
+        overflow-y: auto;
+        padding-top: 24px;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    /* Dimmed overlay behind the drawer */
+    .sidebar-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.35);
+        z-index: 1050;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.28s ease;
+    }
+
+    .sidebar-backdrop.visible {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    /* ---- Main content ---- */
+    .main-content {
+        width: 100%;
+    }
+
+    /* Hide the desktop top-navbar on mobile */
+    .top-navbar {
+        display: none;
+    }
+
+    /* ---- Content body padding ---- */
+    .content-body {
+        padding: 20px 16px;
+    }
+
+    /* ---- Home tab grid - stack cards ---- */
+    .grid-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .balance-card-blue {
+        padding: 22px 20px;
+    }
+
+    .balance-card-blue h1 {
+        font-size: 28px;
+        margin: 10px 0;
+    }
+
+    /* ---- Quick action buttons - scrollable row ---- */
+    .action-buttons {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        -webkit-overflow-scrolling: touch;
+        gap: 8px;
+    }
+
+    .action-buttons button {
+        padding: 10px 14px;
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+
+    /* ---- Save tab - stack savings cards ---- */
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .saving-box {
+        padding: 18px;
+    }
+
+    /* ---- Balance summary text ---- */
+    .balance-summary h2 {
+        font-size: 28px;
+    }
+
+    /* ---- Investment card ---- */
+    .investment-card {
+        padding: 20px;
+    }
+
+    /* ---- Stash container ---- */
+    .stash-container {
+        padding: 0;
+    }
+
+    .stash-left h2 {
+        font-size: 28px;
+    }
+
+    /* ---- Empty state ---- */
+    .empty-state {
+        padding: 40px 16px;
+    }
+
+    .bank-icon {
+        font-size: 48px;
+    }
+
+    /* ---- Sub nav pills ---- */
+    .sub-nav {
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .sub-link {
+        padding: 6px 14px;
+        font-size: 13px;
+    }
+
+    /* ---- Mobile bottom navigation bar ---- */
+    .mobile-bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 66px;
+        background: #ffffff;
+        border-top: 1px solid #eef2f5;
+        box-shadow: 0 -2px 12px rgba(0,0,0,0.07);
+        z-index: 999;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 4px;
+    }
+
+    .mob-nav-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        gap: 3px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px 4px;
+        border-radius: 10px;
+        color: #94a3b8;
+        transition: color 0.18s, background 0.18s;
+    }
+
+    .mob-nav-btn.active {
+        color: #2b6cb0;
+        background-color: #ebf8ff;
+    }
+
+    .mob-icon {
+        font-size: 20px;
+        line-height: 1;
+    }
+
+    .mob-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+}
+
+/* =====================================================
+   DASHBOARD — Tablet (769px to 1024px)
+   Keep sidebar but shrink it; reduce grid gaps.
+   ===================================================== */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+
+    .sidebar {
+        width: 180px;
+        padding: 16px;
+    }
+
+    .user-name {
+        font-size: 18px;
+    }
+
+    .menu-btn {
+        font-size: 13px;
+        padding: 10px 12px;
+    }
+
+    .content-body {
+        padding: 24px 20px;
+    }
+
+    .grid-layout {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .balance-card-blue h1 {
+        font-size: 28px;
     }
 }
