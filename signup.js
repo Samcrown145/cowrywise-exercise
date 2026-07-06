@@ -37,7 +37,11 @@ function btn() {
         usedEmailsList.push(emailValue);
         localStorage.setItem('userEmail', emailValue);
         localStorage.setItem('usedEmails', JSON.stringify(usedEmailsList));
-        window.location.href = "verificationpage.html";
+        if (window.showLoaderAndRedirect) {
+            window.showLoaderAndRedirect("verificationpage.html");
+        } else {
+            window.location.href = "verificationpage.html";
+        }
     }
 }
 

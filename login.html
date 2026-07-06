@@ -10,7 +10,7 @@
     <link rel="icon" href="./cowry.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
- 
+
 </head>
 
 <body style="background-color: #f4f7fa;">
@@ -18,6 +18,13 @@
     <div class="Log-in-logo">
         <img src="./download (19).svg" alt="">
     </div>
+
+    <script>
+        window.showLoaderAndRedirect = function(url) {
+            sessionStorage.setItem('nextPage', url);
+            window.location.href = 'loader.html';
+        }
+    </script>
 
 
     <div class="form-container">
@@ -33,44 +40,45 @@
 
         <div class="box">
             <!-- <form action=""> -->
-                <div class="form" style="display: flex; flex-direction: column; width: 80%; margin: 60px auto;">
+            <div class="form" style="display: flex; flex-direction: column; width: 80%; margin: 60px auto;">
 
-                    <div class="google-apple"
-                        style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px;">
-                        <button style="display: flex; align-items: center; border: 2px solid #e0e4eb; width: 48%; text-decoration: none; padding: 8px 28px; color: black; font-weight: 500; border-radius: 5px;background-color: white;"
-                            onclick="googleSign()">
-                            <img src="./download (20).svg" alt="" style="margin-right: 8px;">
-                            <p style="margin: 0px; font-size: 14px;">Sign In with Google</p>
-                </button>
+                <div class="google-apple"
+                    style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px;">
+                    <button
+                        style="display: flex; align-items: center; border: 2px solid #e0e4eb; width: 48%; text-decoration: none; padding: 8px 28px; color: black; font-weight: 500; border-radius: 5px;background-color: white;"
+                        onclick="googleSign()">
+                        <img src="./download (20).svg" alt="" style="margin-right: 8px;">
+                        <p style="margin: 0px; font-size: 14px;">Sign In with Google</p>
+                    </button>
 
-                        <a style="display: flex; align-items: center; border: 2px solid #e0e4eb; width: 48%; text-decoration: none; padding: 8px 29px; color: black; font-weight: 500; border-radius: 5px;"
-                            href="">
-                            <img src="./download (22).svg" alt="" style="width: 20px; margin-right: 8px;">
-                            <p style="margin: 0; font-size: 14px;">Sign In with Apple</p>
-                        </a>
-                    </div>
-                    <div class="divider">or</div> <br>
-                    <form id="loginForm">
-                        <div class="input-container">
-                            <input type="email" id="email" placeholder=" " required>
-                            <label for="email">Email Address</label>
-                        </div>
-
-                        <div class="input-container">
-                            <input type="password" id="pass" placeholder=" " required>
-                            <label for="pass">Password</label>
-                        </div>
-                        <i class="fa-solid fa-eye" id="togglePassword"></i>
-                        <a href="forgot-password.html">Forget password?</a> <br> <br>
-                        <button type="submit" style="width: 100%;">Sign in</button>
-                    </form>
-                </div> <br>
-                <div class="help-section" style="display: flex; justify-content: space-between;">
-                    <span>Trouble signing in? <a
-                            style="text-decoration: none; color: #0368f5; font-size: 14px;font-weight: 600;"
-                            href="">Chat with us</a></span>
-                    <a style="color: #6c83a3; text-decoration: none; font-size: 14px;" href="">Privacy | Terms</a>
+                    <a style="display: flex; align-items: center; border: 2px solid #e0e4eb; width: 48%; text-decoration: none; padding: 8px 29px; color: black; font-weight: 500; border-radius: 5px;"
+                        href="">
+                        <img src="./download (22).svg" alt="" style="width: 20px; margin-right: 8px;">
+                        <p style="margin: 0; font-size: 14px;">Sign In with Apple</p>
+                    </a>
                 </div>
+                <div class="divider">or</div> <br>
+                <form id="loginForm">
+                    <div class="input-container">
+                        <input type="email" id="email" placeholder=" " required>
+                        <label for="email">Email Address</label>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="password" id="pass" placeholder=" " required>
+                        <label for="pass">Password</label>
+                    </div>
+                    <i class="fa-solid fa-eye" id="togglePassword"></i>
+                    <a href="forgot-password.html">Forget password?</a> <br> <br>
+                    <button type="submit" style="width: 100%;">Sign in</button>
+                </form>
+            </div> <br>
+            <div class="help-section" style="display: flex; justify-content: space-between;">
+                <span>Trouble signing in? <a
+                        style="text-decoration: none; color: #0368f5; font-size: 14px;font-weight: 600;" href="">Chat
+                        with us</a></span>
+                <a style="color: #6c83a3; text-decoration: none; font-size: 14px;" href="">Privacy | Terms</a>
+            </div>
             <!-- </form> -->
         </div>
 
@@ -97,15 +105,15 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    window.googleSign = async function() {
+    window.googleSign = async function () {
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
-            
+
             // Check if user has an account in the persistent accounts list
             const allUserAccounts = JSON.parse(localStorage.getItem('allUserAccounts')) || [];
             const existingAccount = allUserAccounts.find(account => account.email === user.email);
-            
+
             // If user has a complete account (with profile and PIN created)
             if (existingAccount && existingAccount.firstName && existingAccount.password) {
                 // User has complete account - log them in to dashboard
@@ -118,17 +126,17 @@
                     isGoogleAuth: true,
                     lastLogin: new Date().toISOString()
                 };
-                
+
                 localStorage.setItem('userData', JSON.stringify(updatedData));
                 localStorage.setItem('userEmail', user.email);
-                
+
                 // Also set the PIN if it exists
                 const storedPin = localStorage.getItem('userPin');
                 if (storedPin) {
                     localStorage.setItem('userPin', storedPin);
                 }
-                
-                window.location.href = 'dashboard.html';
+
+                window.showLoaderAndRedirect('dashboard.html');
             } else {
                 // Account does not exist - show error and stay on login page
                 Toastify({
@@ -141,7 +149,7 @@
                         color: "white"
                     }
                 }).showToast();
-                
+
                 // Clear any temporary data
                 localStorage.removeItem('userData');
             }
@@ -149,14 +157,14 @@
             console.error("Google Sign In Error:", error);
         }
     };
-    
+
     // Handle email/password login
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('pass').value.trim();
-        
+
         // Validate inputs
         if (!email || !password) {
             Toastify({
@@ -171,15 +179,15 @@
             }).showToast();
             return;
         }
-        
+
         // Get all stored user accounts
         const allUserAccounts = JSON.parse(localStorage.getItem('allUserAccounts')) || [];
-        
+
         // Find matching account
-        const matchingAccount = allUserAccounts.find(account => 
+        const matchingAccount = allUserAccounts.find(account =>
             account.email === email && account.password === password
         );
-        
+
         if (matchingAccount) {
             // User found - set as current user and go to dashboard
             const savedPin = matchingAccount.pin || localStorage.getItem('userPin');
@@ -194,7 +202,7 @@
             if (savedPin) {
                 localStorage.setItem('userPin', savedPin);
             }
-            
+
             Toastify({
                 text: "Login successful!",
                 duration: 2000,
@@ -205,9 +213,9 @@
                     color: "white"
                 }
             }).showToast();
-            
+
             setTimeout(() => {
-                window.location.href = 'dashboard.html';
+                window.showLoaderAndRedirect('dashboard.html');
             }, 500);
         } else {
             Toastify({
@@ -222,12 +230,12 @@
             }).showToast();
         }
     });
-    
+
     // Password toggle visibility
     document.getElementById('togglePassword').addEventListener('click', () => {
         const passInput = document.getElementById('pass');
         const icon = document.getElementById('togglePassword');
-        
+
         if (passInput.type === 'password') {
             passInput.type = 'text';
             icon.classList.remove('fa-eye');
@@ -239,4 +247,5 @@
         }
     });
 </script>
+
 </html>

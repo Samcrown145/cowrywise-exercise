@@ -14,12 +14,16 @@
 </head>
 
 <body>
+    <script>
+        window.showLoaderAndRedirect = function(url) {
+            sessionStorage.setItem('nextPage', url);
+            window.location.href = 'loader.html';
+        }
+    </script>
 
     <div class="Log-in-logo">
         <img src="./download (19).svg" alt="">
     </div>
-
-    <body>
 
         <div class="Box-Sign-in">
             <div style="display: flex; justify-content: space-around;">
@@ -131,7 +135,7 @@
                 localStorage.setItem('userData', JSON.stringify(userData));
                 localStorage.setItem('userEmail', user.email);
                 
-                window.location.href = 'complete-profile.html';
+                window.showLoaderAndRedirect('complete-profile.html');
             } catch (error) {
                 console.error("Google Sign Up Error:", error);
             }
