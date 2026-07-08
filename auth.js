@@ -17,6 +17,35 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
+function showToast(message, type = "info") {
+    const colors = {
+        success: "linear-gradient(135deg, #16a34a, #22c55e)",
+        error: "linear-gradient(135deg, #dc2626, #f97316)",
+        info: "linear-gradient(135deg, #0066ff, #38bdf8)"
+    };
+
+    if (typeof Toastify === "function") {
+        Toastify({
+            text: message,
+            duration: 3500,
+            gravity: "top",
+            position: "right",
+            close: true,
+            stopOnFocus: true,
+            style: {
+                background: colors[type] || colors.info,
+                borderRadius: "8px",
+                color: "#ffffff",
+                fontWeight: "800",
+                padding: "14px 16px"
+            }
+        }).showToast();
+        return;
+    }
+
+    console.log(message);
+}
+
 // Save user data to localStorage
 function saveUserData(userData) {
     localStorage.setItem('userData', JSON.stringify(userData));
@@ -63,7 +92,7 @@ async function googleSignUpFlow() {
         }, 500);
     } catch (error) {
         console.error("Google Sign Up Error:", error);
-        alert("Sign up failed: " + error.message);
+        showToast("Sign up failed: " + error.message, "error");
     }
 }
 
@@ -102,7 +131,7 @@ async function googleSignInFlow() {
         }
     } catch (error) {
         console.error("Google Sign In Error:", error);
-        alert("Sign in failed: " + error.message);
+        showToast("Sign in failed: " + error.message, "error");
     }
 }
 
