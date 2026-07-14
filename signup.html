@@ -123,8 +123,11 @@
             try {
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
+                const allUserAccounts = JSON.parse(localStorage.getItem('allUserAccounts')) || [];
+                const existingAccount = allUserAccounts.find(account => account.email === user.email);
                 
                 const userData = {
+                    ...(existingAccount || {}),
                     email: user.email,
                     displayName: user.displayName,
                     photoURL: user.photoURL,
@@ -134,6 +137,12 @@
                 
                 localStorage.setItem('userData', JSON.stringify(userData));
                 localStorage.setItem('userEmail', user.email);
+
+                if (existingAccount && existingAccount.firstName && existingAccount.password && existingAccount.pin) {
+                    localStorage.setItem('userPin', existingAccount.pin);
+                    window.showLoaderAndRedirect('dashboard.html');
+                    return;
+                }
                 
                 window.showLoaderAndRedirect('complete-profile.html');
             } catch (error) {

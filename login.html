@@ -115,7 +115,7 @@
             const existingAccount = allUserAccounts.find(account => account.email === user.email);
 
             // If user has a complete account (with profile and PIN created)
-            if (existingAccount && existingAccount.firstName && existingAccount.password) {
+            if (existingAccount && existingAccount.firstName && existingAccount.password && existingAccount.pin) {
                 // User has complete account - log them in to dashboard
                 const updatedData = {
                     ...existingAccount,
@@ -129,14 +129,23 @@
 
                 localStorage.setItem('userData', JSON.stringify(updatedData));
                 localStorage.setItem('userEmail', user.email);
-
-                // Also set the PIN if it exists
-                const storedPin = localStorage.getItem('userPin');
-                if (storedPin) {
-                    localStorage.setItem('userPin', storedPin);
-                }
+                localStorage.setItem('userPin', existingAccount.pin);
 
                 window.showLoaderAndRedirect('dashboard.html');
+            } else if (existingAccount && existingAccount.firstName && existingAccount.password) {
+                const updatedData = {
+                    ...existingAccount,
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL,
+                    uid: user.uid,
+                    isGoogleAuth: true,
+                    lastLogin: new Date().toISOString()
+                };
+
+                localStorage.setItem('userData', JSON.stringify(updatedData));
+                localStorage.setItem('userEmail', user.email);
+                window.showLoaderAndRedirect('EnterPin.html');
             } else {
                 // Account does not exist - show error and stay on login page
                 Toastify({

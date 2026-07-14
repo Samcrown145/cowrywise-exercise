@@ -132,6 +132,12 @@ codeInput.addEventListener('input', () => {
 
 function continueBtn() {
     if (codeInput.value.length === 6) {
+        const existingUserData = JSON.parse(localStorage.getItem('userData') || '{}');
+        localStorage.setItem('userData', JSON.stringify({
+            ...existingUserData,
+            email: savedEmail,
+            isGoogleAuth: false
+        }));
         window.location.href = "complete-profile.html";
     } else {
         showToast('Please enter exactly 6 digits.', 'error');
